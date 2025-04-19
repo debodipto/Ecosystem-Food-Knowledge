@@ -1,1 +1,34 @@
+eats(human, chicken).
+eats(human, fish).
+eats(human, egg).
+eats(human, duck).
+eats(human, pig).
+eats(human, honey).
+eats(human, vegetable_curry).
+eats(human, milk).
 
+eats(chicken, grain).
+eats(fish, algae).
+eats(egg, chicken).
+eats(chicken, corn). 
+eats(duck, insect).
+eats(insect, aquatic_plant).
+eats(pig, roots).
+eats(pig, tubers).
+eats(honey, bee).
+eats(bee, flower_nectar).
+eats(vegetable_curry, mixed_vegetables).
+eats(mixed_vegetables, soil_nutrients).
+eats(milk, cow).
+eats(cow, grain).
+
+in_food_chain(X, Y) :- eats(X, Y).
+in_food_chain(X, Y) :- eats(X, Z), in_food_chain(Z, Y).
+
+producer(X) :- \+ eats(X, _).
+
+consumer(X) :- eats(X, _).
+prey(X) :- eats(_, X).
+
+top_of_chain(X) :- eats(X, _), \+ prey(X).
+all_under(X, List) :- setof(Y, in_food_chain(X, Y), List).
